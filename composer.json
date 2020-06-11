@@ -1,0 +1,15 @@
+{
+	"name": "arckinteractive/elgg_oauth_sso",
+	"type": "elgg-plugin",
+	"description": "Allows other sites/services to implement SSO using the Elgg as the source of truth for user info",
+	"require": {
+		"php": ">=5.5",
+		"composer/installers": "~1.0",
+		"bshaffer/oauth2-server-php": "^1.11"
+	},
+	"autoload": {
+        "psr-0": {
+            "": "classes/"
+        }
+    }
+}
