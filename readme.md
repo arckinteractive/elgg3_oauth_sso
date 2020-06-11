@@ -30,3 +30,23 @@ Allows other sites to use the elgg server as an oauth identity manager
     }
 ```
 
+7. The access token in the header: `Authorization: Bearer 369e27dae447d3856fc538a217536b186cea1bc3` for future OAuth api calls
+1. Retrieve the user info from the GET endpoint `/oauth/api/me`
+
+```
+    {
+        "name": "Matt Beckett",
+        "username": "mbeckett",
+        "email": "matt@arckinteractive.com"
+    }
+```
+
+9. Use the refresh token to get a fresh access token if necessary, make a POST request to `/oauth/token` with body params of
+```
+    {
+        client_id: xxxxxxxx,
+        client_secret: xxxxxxx,
+        grant_type: 'refresh_token',
+        refresh_token: xxxxxxxxxx
+    }
+```

@@ -28,8 +28,6 @@ $application->redirect_uri = $redirect_uri;
 
 if (!$application->client_secret || get_input('regenerate_keys')) {
     $application->client_secret = _elgg_services()->crypto->getRandomString(32, \ElggCrypto::CHARS_PASSWORD);
-    $application->public_key = 'pub_' . _elgg_services()->crypto->getRandomString(32, \ElggCrypto::CHARS_PASSWORD);
-    $application->private_key = 'sec_' . _elgg_services()->crypto->getRandomString(32, \ElggCrypto::CHARS_PASSWORD);
 }
 
 $application->save();

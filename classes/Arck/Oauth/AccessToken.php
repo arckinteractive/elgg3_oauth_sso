@@ -18,29 +18,38 @@ class AccessToken extends \ElggObject {
      * return array
      */
     public static function getDetailsFromToken($token) {
-        $refreshToken = elgg_get_entities_from_metadata([
+        $ia = elgg_set_ignore_access(true);
+        $accessToken = elgg_get_entities_from_metadata([
             'type' => 'object',
             'subtype' => self::SUBTYPE,
             'metadata_name_value_pairs' => [
-                'name' => 'refresh_token',
-                'value' => $token
+                [
+                    'name' => 'access_token',
+                    'value' => $token
+                ]
 			],
 			'limit' => 1
         ]);
 
-        if ($refreshToken) {
-			if (is_array($refreshToken)) {
-				$refreshToken = $refreshToken[0];
-			}
+        if ($accessToken) {
+			if (is_array($accessToken)) {
+				$accessToken = $accessToken[0];
+            }
 
-            return [
-				'access_token' => $refreshToken->refresh_token,
-				'client_id' => $refreshToken->client_id,
-				'user_id' => $refreshToken->owner_guid,
-				'expires' => $refreshToken->expires,
-				'scope' => $refreshToken->scope
+            $result = [
+				'access_token' => $accessToken->access_token,
+				'client_id' => $accessToken->client_id,
+				'user_id' => $accessToken->owner_guid,
+				'expires' => $accessToken->expires,
+				'scope' => $accessToken->scope
             ];
+            
+            elgg_set_ignore_access($ia);
+
+            return $result;
         }
+
+        elgg_set_ignore_access($ia);
 
         return [];
     }
@@ -57,7 +66,7 @@ class AccessToken extends \ElggObject {
             'type' => 'object',
             'subtype' => self::SUBTYPE,
             'metadata_name_value_pairs' => [
-                'name' => 'refresh_token',
+                'name' => 'access_token',
                 'value' => $params['access_token']
             ]
         ]);

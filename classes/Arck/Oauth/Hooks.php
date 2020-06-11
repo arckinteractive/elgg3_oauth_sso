@@ -26,16 +26,17 @@ class Hooks {
         }
 
         // ensure user scope
-        // if (!$['server']->verifyResourceResponse($p['request'], $p['response'], 'user')) {
-        //     $r = $p['response'];
-        //     $r->setError(401, 'invalid_scope', 'The access token does not have the required scope');
-        //     return $r;
-        // }
+        if (!$p['server']->verifyResourceRequest($p['request'], $p['response'], 'user')) {
+            $r = $p['response'];
+            $r->setError(401, 'invalid_scope', 'The access token does not have the required scope');
+            return $r;
+        }
 
         $r = $p['response'];
         $r->setParameters([
-            'test' => 1,
-            'other' => 2
+            'name' => $p['user']->name,
+            'username' => $p['user']->username,
+            'email' => $p['user']->email
         ]);
         
         return $r;

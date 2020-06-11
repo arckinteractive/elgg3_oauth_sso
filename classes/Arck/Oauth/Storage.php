@@ -379,12 +379,17 @@ class Storage implements AuthorizationCodeInterface,
      */
     public function getDefaultScope($client_id = null)
     {
-        if (is_null($client_id) || !$result = Client::getDetailsFromID($client_id)) {
-            $result = ['user'];
-
-            // allow other plugins to modify the 
-            $result = elgg_trigger_plugin_hook('oauth', 'scope:default', $result, $result);
+        if (!is_null($client_id)) {
+            $clientDetails = Client::getDetailsFromID($client_id);
+            if ($clientDetails && isset($clientDetails['scope']) && $clientDetails['scope'])  {
+                return $clientDetails['scope'];
+            }
         }
+
+        $result = ['user'];
+
+        // allow other plugins to modify the 
+        $result = elgg_trigger_plugin_hook('oauth', 'scope:default', $result, $result);
 
         return $result;
     }

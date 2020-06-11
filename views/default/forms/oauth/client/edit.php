@@ -62,20 +62,6 @@ if ($entity && $entity->guid) {
     ]);
 
     echo elgg_view_field([
-        '#type' => 'text',
-        '#label' => elgg_echo('oauth:client:pub_key'),
-        'value' => $entity->public_key,
-        'disabled' => true
-    ]);
-
-    echo elgg_view_field([
-        '#type' => 'text',
-        '#label' => elgg_echo('oauth:client:priv_key'),
-        'value' => $entity->private_key,
-        'disabled' => true
-    ]);
-
-    echo elgg_view_field([
         '#type' => 'checkbox',
         'name' => 'regenerate_keys',
         'value' => 1,

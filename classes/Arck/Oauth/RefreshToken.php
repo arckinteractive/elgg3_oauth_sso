@@ -18,6 +18,8 @@ class RefreshToken extends \ElggObject {
      * return array
      */
     public static function getDetailsFromToken($token) {
+        $ia = elgg_set_ignore_access(true);
+
         $refreshToken = elgg_get_entities_from_metadata([
             'type' => 'object',
             'subtype' => self::SUBTYPE,
@@ -31,16 +33,22 @@ class RefreshToken extends \ElggObject {
         if ($refreshToken) {
 			if (is_array($refreshToken)) {
 				$refreshToken = $refreshToken[0];
-			}
+            }
 
-            return [
+            $res = [
 				'refresh_token' => $refreshToken->refresh_token,
 				'client_id' => $refreshToken->client_id,
 				'user_id' => $refreshToken->owner_guid,
 				'expires' => $refreshToken->expires,
 				'scope' => $refreshToken->scope
             ];
+            
+            elgg_set_ignore_access($ia);
+
+            return $res;
         }
+
+        elgg_set_ignore_access($ia);
 
         return [];
     }

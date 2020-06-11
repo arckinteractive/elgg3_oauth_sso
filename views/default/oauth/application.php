@@ -32,8 +32,33 @@ echo elgg_view('output/longtext', [
 ]);
 
 if (elgg_is_logged_in()) {
-    if (get_input('submitted')) {
-        $res = $server->handleAuthorizeRequest($request, $response, true);
+    // has previously authorized?
+    // @TODO - a more formal relationship between the user and the application, that could potentially be revoked
+    // for basic use case we'll assume it's ok if they have an existing access token
+    // if there are more scopes than our user scope, we will need a more robust check
+    $existing_tokens = elgg_get_entities_from_metadata([
+        'type' => 'object',
+        'subtype' => AccessToken::SUBTYPE,
+        'owner_guid' => elgg_get_logged_in_user_guid(),
+        'metadata_name_value_pairs' => [
+            [
+                'name' => 'client_id',
+                'value' => get_input('client_id')
+            ]
+        ],
+        'count' => true
+    ]);
+
+    $params = [
+        'client_id' => get_input('client_id'),
+        'scope' => get_input('scope'),
+        'user' => elgg_get_logged_in_user_entity()
+    ];
+
+    $has_authorized = elgg_trigger_plugin_hook('oauth', 'has_authorized', $params, $existing_tokens > 0);
+
+    if (get_input('submitted') || $has_authorized) {
+        $res = $server->handleAuthorizeRequest($request, $response, true, elgg_get_logged_in_user_guid());
 
         $res->send();
 

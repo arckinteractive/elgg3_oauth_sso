@@ -23,20 +23,6 @@ if ($entity->canEdit()) {
         'value' => $entity->client_secret,
         'readonly' => true
     ]);
-
-    echo elgg_view_field([
-        '#type' => 'text',
-        '#label' => elgg_echo('oauth:client:pub_key'),
-        'value' => $entity->public_key,
-        'readonly' => true
-    ]);
-
-    echo elgg_view_field([
-        '#type' => 'text',
-        '#label' => elgg_echo('oauth:client:priv_key'),
-        'value' => $entity->private_key,
-        'readonly' => true
-    ]);
     echo '</div>';
 
     echo elgg_view('output/url', [
