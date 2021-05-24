@@ -1,5 +1,5 @@
 {
-	"name": "arckinteractive/elgg_oauth_sso",
+	"name": "arckinteractive/elgg3_oauth_sso",
 	"type": "elgg-plugin",
 	"description": "Allows other sites/services to implement SSO using the Elgg as the source of truth for user info",
 	"require": {
