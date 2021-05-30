@@ -33,10 +33,6 @@ class Bootstrap extends DefaultPluginBootstrap {
     
         elgg_register_admin_menu_item('administer', 'applications', 'oauth');
     
-        elgg_register_action('oauth/client/edit', __DIR__ . '/actions/oauth/client/edit.php', 'admin');
-        elgg_register_action('oauth/applications/delete', __DIR__ . '/actions/oauth/client/delete.php', 'admin');
-        elgg_register_action('oauth/login', __DIR__ . '/actions/oauth/login.php', 'public');
-    
         // register api endpoints
         elgg_register_plugin_hook_handler('oauth', 'api:GET', __NAMESPACE__ . '\\Hooks::apiMe');
     }
