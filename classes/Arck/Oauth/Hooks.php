@@ -32,12 +32,17 @@ class Hooks {
             return $r;
         }
 
-        $r = $p['response'];
-        $r->setParameters([
+        $exported_user = [
+            'guid' => $p['user']->guid,
             'name' => $p['user']->name,
             'username' => $p['user']->username,
-            'email' => $p['user']->email
-        ]);
+            'email' => $p['user']->email,
+        ];
+
+        $exported_user = elgg_trigger_plugin_hook('export', 'oauth_user', $p['user'], $exported_user);
+
+        $r = $p['response'];
+        $r->setParameters($exported_user);
         
         return $r;
     }
