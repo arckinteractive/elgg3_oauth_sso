@@ -1,30 +1,30 @@
 <?php
 
 return [
-    'bootstrap' => \Arck\Oauth\Bootstrap::class,
+    'bootstrap' => '\\Arck\\Oauth\\Bootstrap',
     'entities' => [
 		[
 			'type' => 'object',
-			'subtype' => \Arck\Oauth\AccessToken::SUBTYPE,
-			'class' => \Arck\Oauth\AccessToken::class,
+			'subtype' => 'oauth_access_token',
+			'class' => '\\Arck\\Oauth\\AccessToken',
 			'searchable' => false,
 		],
         [
             'type' => 'object',
-            'subtype' => \Arck\Oauth\AuthCode::SUBTYPE,
-            'class' => \Arck\Oauth\AuthCode::class,
+            'subtype' => 'oauth_authorization_code',
+            'class' => '\\Arck\\Oauth\\AuthCode',
             'searchable' => false,
         ],
         [
             'type' => 'object',
-            'subtype' => \Arck\Oauth\Client::SUBTYPE,
-            'class' => \Arck\Oauth\Client::class,
+            'subtype' => 'oauth_client',
+            'class' => '\\Arck\\Oauth\\Client',
             'searchable' => false,
         ],
         [
             'type' => 'object',
-            'subtype' => \Arck\Oauth\RefreshToken::SUBTYPE,
-            'class' => \Arck\Oauth\RefreshToken::class,
+            'subtype' => 'oauth_refresh_token',
+            'class' => '\\Arck\\Oauth\\RefreshToken',
             'searchable' => false,
         ]
     ],
