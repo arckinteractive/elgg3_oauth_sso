@@ -35,5 +35,8 @@ class Bootstrap extends DefaultPluginBootstrap {
     
         // register api endpoints
         elgg_register_plugin_hook_handler('oauth', 'api:GET', __NAMESPACE__ . '\\Hooks::apiMe');
+
+		// clean up expired tokens
+		elgg_register_plugin_hook_handler('cron', 'minute', __NAMESPACE__ . '\\Hooks::dailyCron');
     }
 }

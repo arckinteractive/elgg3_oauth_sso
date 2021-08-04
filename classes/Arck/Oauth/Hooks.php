@@ -46,4 +46,73 @@ class Hooks {
         
         return $r;
     }
+
+    /**
+     * Database cleanup
+     */
+    public static function dailyCron() {
+
+        elgg_call(ELGG_IGNORE_ACCESS, function() {
+            // delete expired access tokens
+            $access_tokens = elgg_get_entities([
+                'type' => 'object',
+                'subtype' => 'oauth_access_token',
+                'metadata_name_value_pairs' => [
+                    [
+                        'name' => 'expires',
+                        'value' => time(),
+                        'operand' => '<',
+                    ]
+                ],
+                'limit' => false,
+                'batch' => true,
+                'batch_inc_offset' => false
+            ]);
+
+            foreach ($access_tokens as $token) {
+                $token->delete();
+            }
+
+
+            // delete expired authorization codes
+            $auth_codes = elgg_get_entities([
+                'type' => 'object',
+                'subtype' => 'oauth_authorization_code',
+                'metadata_name_value_pairs' => [
+                    [
+                        'name' => 'expires',
+                        'value' => time(),
+                        'operand' => '<',
+                    ]
+                ],
+                'limit' => false,
+                'batch' => true,
+                'batch_inc_offset' => false
+            ]);
+
+            foreach ($auth_codes as $code) {
+                $code->delete();
+            }
+
+            // delete expired authorization codes
+            $refresh_tokens = elgg_get_entities([
+                'type' => 'object',
+                'subtype' => 'oauth_refresh_token',
+                'metadata_name_value_pairs' => [
+                    [
+                        'name' => 'expires',
+                        'value' => time(),
+                        'operand' => '<',
+                    ]
+                ],
+                'limit' => false,
+                'batch' => true,
+                'batch_inc_offset' => false
+            ]);
+
+            foreach ($refresh_tokens as $token) {
+                $token->delete();
+            }
+        });
+    }
 }
